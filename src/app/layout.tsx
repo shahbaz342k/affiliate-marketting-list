@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon-180.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

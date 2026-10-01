@@ -14,9 +14,9 @@ export function Footer() {
             <Link href="/" className="text-stone-600 hover:text-stone-900">
               Browse all picks
             </Link>
-            <Link href="/api/products" className="text-stone-600 hover:text-stone-900">
+            {/* <Link href="/api/products" className="text-stone-600 hover:text-stone-900">
               JSON feed
-            </Link>
+            </Link> */}
             <Link href="/admin" className="text-stone-600 hover:text-stone-900">
               Manage products
             </Link>

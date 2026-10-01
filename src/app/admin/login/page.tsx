@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/admin/LoginForm";
-import { getDefaultPassword, isAdmin, isUsingDefaultPassword } from "@/lib/auth";
+import { isAdmin, isUsingDefaultPassword } from "@/lib/auth";
 import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
@@ -41,14 +41,7 @@ export default async function AdminLoginPage({ searchParams }: { searchParams: S
 
           <LoginForm next={target} />
 
-          {showDefaultHint && (
-            <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-800">
-              <strong>Default password:</strong>{" "}
-              <code className="rounded bg-amber-100 px-1.5 py-0.5 font-mono">{getDefaultPassword()}</code>
-              <br />
-              Set an <code className="font-mono">ADMIN_PASSWORD</code> environment variable to choose your own.
-            </div>
-          )}
+          
         </div>
       </div>
     </main>

@@ -4,5 +4,5 @@ export const siteConfig = {
   description:
     "A personal, hand-curated list of affiliate products shared with friends. Every item here is something I use or would happily buy again.",
   disclosure:
-    "Heads up: links on this site are affiliate links. If you buy something through them I may earn a small commission — at no extra cost to you. Thanks for the support!",
+    "Some links on this site are affiliate links. Purchases made through these links help support this site, at no extra cost to you. Thank you for your support!",
 };

@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const ADMIN_COOKIE = "picks_admin_session";
-const DEFAULT_PASSWORD = "admin123";
+const DEFAULT_PASSWORD = process.env.ADMIN_KEY?.trim() || "admin@8604";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 30; // 30 days
 
 export function getAdminPassword(): string {

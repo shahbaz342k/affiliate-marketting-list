@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+
+  --shadow-card: 0 1px 2px rgba(28, 25, 23, 0.04), 0 8px 24px -12px rgba(28, 25, 23, 0.18);
+  --shadow-card-hover: 0 2px 4px rgba(28, 25, 23, 0.06), 0 20px 40px -16px rgba(28, 25, 23, 0.28);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-stone-50);
+    color: var(--color-stone-900);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-200);
+    color: var(--color-brand-900);
+  }
+
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+@utility hero-glow {
+  background-image:
+    radial-gradient(60rem 30rem at 10% -10%, rgba(249, 115, 22, 0.16), transparent 60%),
+    radial-gradient(50rem 26rem at 95% 0%, rgba(251, 191, 36, 0.18), transparent 60%);
+}
+
+@utility field {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-stone-300);
+  background-color: white;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.925rem;
+  color: var(--color-stone-900);
+  transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+@utility field-focus {
+  &:focus {
+    outline: none;
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+  }
+}

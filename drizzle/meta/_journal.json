@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790966395090,
+      "tag": "0000_account-and-product-lists",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790967636086,
+      "tag": "0001_admin-account-approval",
+      "breakpoints": true
+    }
+  ]
+}

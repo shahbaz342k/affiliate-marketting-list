@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Product } from "@/db/schema";
 import { formatPrice } from "@/lib/utils";
 import { BuyButton } from "./BuyButton";
+import { ProductListButtons } from "./ProductListButtons";
 import { ProductImage } from "./ProductImage";
 import { Rating } from "./Rating";
 
@@ -63,6 +64,9 @@ export function ProductCard({ product }: { product: Product }) {
             {price ?? <span className="text-sm font-medium text-stone-500">See price</span>}
           </span>
           <BuyButton productId={product.id} />
+        </div>
+        <div className="flex justify-end pt-1">
+          <ProductListButtons productId={product.id} />
         </div>
       </div>
     </article>

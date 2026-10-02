@@ -27,6 +27,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <Link href="/admin" className={navLinkClass}>
               Products
             </Link>
+            <Link href="/admin#account-requests" className={navLinkClass}>
+              Account requests
+            </Link>
             <Link href="/admin/new" className={navLinkClass}>
               Add product
             </Link>

@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
+import { ProductListButtons } from "@/components/ProductListButtons";
 import { Rating } from "@/components/Rating";
 import { isAdmin } from "@/lib/auth";
 import { getProductBySlug, getRelatedProducts } from "@/lib/products";
@@ -124,6 +125,7 @@ export default async function ProductPage({ params }: { params: Params }) {
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <BuyButton productId={product.id} store={product.store} size="lg" />
+              <ProductListButtons productId={product.id} />
               <CopyLinkButton path={`/products/${product.slug}`} />
             </div>
 

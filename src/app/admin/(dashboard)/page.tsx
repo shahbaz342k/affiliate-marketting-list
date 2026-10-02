@@ -1,11 +1,17 @@
 import Link from "next/link";
+import { desc, eq } from "drizzle-orm";
 import {
+  approveAccount,
   deleteProduct,
   loadSampleProducts,
+  rejectAccount,
   toggleFeatured,
   togglePublished,
 } from "@/app/admin/actions";
+import { db } from "@/db";
+import { users } from "@/db/schema";
 import { DeleteProductButton } from "@/components/admin/DeleteProductButton";
+import { RejectAccountButton } from "@/components/admin/RejectAccountButton";
 import { ProductImage } from "@/components/ProductImage";
 import { Rating } from "@/components/Rating";
 import { requireAdmin } from "@/lib/auth";
@@ -42,7 +48,11 @@ function StatCard({ label, value, accent }: { label: string; value: string; acce
 export default async function AdminDashboardPage({ searchParams }: { searchParams: SearchParams }) {
   await requireAdmin("/admin");
   const { msg } = await searchParams;
-  const [items, stats] = await Promise.all([getAllProductsForAdmin(), getAdminStats()]);
+  const [items, stats, pendingAccounts] = await Promise.all([
+    getAllProductsForAdmin(),
+    getAdminStats(),
+    db.select().from(users).where(eq(users.approved, false)).orderBy(desc(users.createdAt)),
+  ]);
   const flash = msg ? FLASH_MESSAGES[msg] : undefined;
   const maxClicks = stats.topProducts[0]?.clicks ?? 0;
 
@@ -75,6 +85,39 @@ export default async function AdminDashboardPage({ searchParams }: { searchParam
           {flash}
         </div>
       )}
+
+      <section id="account-requests" className="scroll-mt-24 rounded-2xl border border-stone-200 bg-white p-5 shadow-card sm:p-6">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-stone-900">Account requests</h2>
+            <p className="mt-1 text-sm text-stone-600">Review new registrations before allowing sign-in.</p>
+          </div>
+          <span className="text-sm font-semibold text-stone-700">{pendingAccounts.length} pending</span>
+        </div>
+        {pendingAccounts.length === 0 ? (
+          <p className="mt-5 border-t border-stone-100 pt-4 text-sm text-stone-500">No account requests waiting for approval.</p>
+        ) : (
+          <ul className="mt-4 divide-y divide-stone-100">
+            {pendingAccounts.map((user) => (
+              <li key={user.id} className="flex flex-wrap items-center justify-between gap-4 py-4 first:pt-2 last:pb-0">
+                <div className="min-w-0">
+                  <p className="truncate font-medium text-stone-900">{user.name}</p>
+                  <p className="truncate text-sm text-stone-600">{user.email}</p>
+                  <p className="mt-1 text-xs text-stone-400">Requested {formatDate(user.createdAt)}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <form action={approveAccount.bind(null, user.id)}>
+                    <button type="submit" className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
+                      Approve
+                    </button>
+                  </form>
+                  <RejectAccountButton action={rejectAccount.bind(null, user.id)} accountName={user.email} />
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Products" value={formatNumber(stats.total)} />

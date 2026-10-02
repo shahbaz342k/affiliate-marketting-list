@@ -4,7 +4,6 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 
 const databaseUrl = process.env.DATABASE_URL;
-console.log("Database URL:", databaseUrl);
 
 export default defineConfig({
   dialect: "postgresql",

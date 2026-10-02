@@ -1,9 +1,15 @@
 import Link from "next/link";
+import { AccountNav } from "@/components/AccountNav";
 import { isAdmin } from "@/lib/auth";
+import { userAuth } from "@/lib/user-auth";
 import { siteConfig } from "@/lib/site";
+import { headers } from "next/headers";
 
 export async function Navbar() {
-  const admin = await isAdmin();
+  const [admin, userSession] = await Promise.all([
+    isAdmin(),
+    userAuth.api.getSession({ headers: await headers() }),
+  ]);
 
   return (
     <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-stone-50/80 backdrop-blur-md">
@@ -37,6 +43,7 @@ export async function Navbar() {
             <span className={`h-1.5 w-1.5 rounded-full ${admin ? "bg-emerald-500" : "bg-stone-300"}`} />
             {admin ? "Dashboard" : "Admin"}
           </Link>
+          <AccountNav signedIn={Boolean(userSession)} />
         </nav>
       </div>
     </header>

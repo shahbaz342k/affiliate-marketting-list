@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { products } from "@/db/schema";
+import { products, users } from "@/db/schema";
 import { sampleProducts } from "@/db/seed";
 import {
   createAdminSession,
@@ -161,4 +161,19 @@ export async function loadSampleProducts(): Promise<void> {
   await db.insert(products).values(sampleProducts).onConflictDoNothing({ target: products.slug });
   revalidateStore();
   redirect("/admin?msg=seeded");
+}
+
+export async function approveAccount(userId: string): Promise<void> {
+  await requireAdmin();
+  await db
+    .update(users)
+    .set({ approved: true, approvedAt: new Date(), updatedAt: new Date() })
+    .where(eq(users.id, userId));
+  revalidatePath("/admin");
+}
+
+export async function rejectAccount(userId: string): Promise<void> {
+  await requireAdmin();
+  await db.delete(users).where(eq(users.id, userId));
+  revalidatePath("/admin");
 }
